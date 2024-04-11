@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 
 const API_URL = "https://api.datamuse.com/"
 
-export default function getWords(userInput: string) : string[] {
+export default function getResults(userInput: string) : string[] {
   const [fetchResult, setFetchResult] = useState([])
 
   const similarTo = API_URL + "words?ml=" + userInput

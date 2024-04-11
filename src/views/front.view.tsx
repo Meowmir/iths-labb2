@@ -1,26 +1,19 @@
 import WordGrid from "../components/word-grid.component.tsx";
-import getWords from "../utils/get-words.util.ts";
 import {useState} from "react";
+import Textfield from "../components/textfield.tsx";
+import getResults from "../utils/get-results.util.ts";
 
 export default function FrontView(){
-  const [similarWord, setSimilarWord] = useState("")
-  const [soundWord, setSoundWord] = useState("")
-
-  const handleClick = () => {
-    getWords(similarWord)
-
-
-  }
-
+  const [words, setWord] = useState("")
+  const results = getResults(words)
 
   return (
     <>
       <h1>Words</h1>
+      <h4>Start typing a word or a sentence</h4>
+      <Textfield onChange={setWord}/>
       <WordGrid
-        onSimilarChange={setSimilarWord}
-        onSimilarClick={handleClick}
-        onSoundChange={setSoundWord}
-        onSoundClick={handleClick}
+        words={results}
         />
     </>
   )
