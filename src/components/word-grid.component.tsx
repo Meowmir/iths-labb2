@@ -1,23 +1,19 @@
 import {Grid} from "@mui/material";
-import TextfieldAndButton from "./textfield-and-button.tsx";
+import GridItem from "./grid-item.tsx";
 
-type WordGridProps = {
-  onSimilarChange: (word: string) => void,
-  onSimilarClick: () => void,
-  onSoundChange: (word: string) => void,
-  onSoundClick: () => void
-}
-
-export default function WordGrid({onSimilarChange, onSimilarClick, onSoundChange, onSoundClick} : WordGridProps){
+export default function WordGrid({words} : {words: string[][]}){
   return (
     <>
      <Grid container>
-      <Grid item xs={3}>
-        <TextfieldAndButton label={"Words with a meaning similar to:"} onChange={onSimilarChange} onClick={onSimilarClick}/>
-      </Grid>
-       <Grid item xs={3}>
-        <TextfieldAndButton label={"Words that sound like:"} onChange={onSoundChange} onClick={onSoundClick}/>
-      </Grid>
+       <Grid item xs={4} sx={{padding: 2}}>
+         <GridItem title="Similar to:" words={words} index={0}/>
+       </Grid>
+       <Grid item xs={4} sx={{padding: 2}}>
+         <GridItem title="Sounds like:" words={words} index={1}/>
+       </Grid>
+       <Grid item xs={4} sx={{padding: 2}}>
+         <GridItem title="Words that often follow:" words={words} index={2}/>
+       </Grid>
      </Grid>
     </>
   )

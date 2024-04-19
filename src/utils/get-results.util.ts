@@ -3,10 +3,15 @@ import {useEffect, useState} from "react";
 
 const API_URL = "https://api.datamuse.com/"
 
-export default function getWords(userInput: string) : string[] {
-  const [fetchResult, setFetchResult] = useState([])
+
+export default function getResults(userInput: string) : string[][] {
+  const [fetchSimilarToResult, setFetchSimilarToResult] = useState([])
+  const [fetchSoundsLikeResult, setFetchSoundsLikeResult] = useState([])
+  const [fetchWordsThatFollowResult, setFetchWordsThatFollowResult] = useState([])
 
   const similarTo = API_URL + "words?ml=" + userInput
+  const soundsLike = API_URL + "words?sl=" + userInput
+  const wordsThatFollow = API_URL + "words?lc=" + userInput + "&sp=???*"
 
   useEffect(() => {
     axios
@@ -16,9 +21,33 @@ export default function getWords(userInput: string) : string[] {
           return item.word
         })
       })
-      .then(setFetchResult)
+      .then(setFetchSimilarToResult)
   }, [userInput]);
 
 
-  return fetchResult
+  useEffect(() => {
+    axios
+      .get(soundsLike)
+      .then((response) => {
+        return response.data.map((item) => {
+          return item.word
+        })
+      })
+      .then(setFetchSoundsLikeResult)
+  }, [userInput]);
+
+  useEffect(() => {
+    axios
+      .get(wordsThatFollow)
+      .then((response) => {
+        return response.data.map((item) => {
+          return item.word
+        })
+      })
+      .then(setFetchWordsThatFollowResult)
+  }, [userInput]);
+
+  return [fetchSimilarToResult, fetchSoundsLikeResult, fetchWordsThatFollowResult]
 }
+
+
